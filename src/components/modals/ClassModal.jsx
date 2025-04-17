@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import { getDepartments } from '../../api/departments';
 import { getCoursesByDepartment } from '../../api/courses';
 
@@ -13,11 +12,6 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
     courses: false
   });
   const isViewMode = mode === 'view';
-  const modalTitle = {
-    add: 'Add New Class',
-    edit: 'Edit Class',
-    view: 'Class Details'
-  }[mode];
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -111,35 +105,46 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
   ];
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 max-w-lg w-full mx-2">
+        {/* Modal Header */}
+        <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+          <div>
+            <h3 className="text-xl font-bold text-blue-900">
+              {mode === 'add' ? 'Add New Class' : 
+               mode === 'edit' ? 'Edit Class' : 'Class Details'}
+            </h3>
+            <p className="mt-0.5 text-sm text-gray-500">
+              {mode === 'add' ? 'Create a new class in the system' : 
+               mode === 'edit' ? 'Modify existing class details' : 'View class information'}
+            </p>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <i className="fas fa-times text-gray-500 text-xl"></i>
+          </button>
         </div>
 
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">{modalTitle}</h3>
-              <button
-                onClick={onClose}
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
-              >
-                <FontAwesomeIcon icon={faTimes} />
-              </button>
-            </div>
-
-            <form onSubmit={onSubmit}>
-              <div className="mb-4">
-                <label htmlFor="departmentId" className="block text-sm font-medium text-gray-700 mb-1">
-                  Department <span className="text-red-500">*</span>
-                </label>
+        <form onSubmit={onSubmit} className="mt-4">
+          <div className="space-y-4">
+            {/* Department Field */}
+            <div className="grid grid-cols-1 gap-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Department
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i className="fas fa-building text-gray-400"></i>
+                </div>
                 {loading.departments ? (
-                  <div className="flex items-center justify-center p-2">
-                    <FontAwesomeIcon icon={faSpinner} spin className="text-blue-500" />
-                    <span className="ml-2">Loading departments...</span>
+                  <div className="pl-10 w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50">
+                    <div className="flex items-center">
+                      <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
+                      <span className="text-gray-500">Loading departments...</span>
+                    </div>
                   </div>
                 ) : (
                   <select
@@ -148,7 +153,12 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                     value={currentClass.departmentId || ''}
                     onChange={handleDepartmentChange}
                     disabled={isViewMode}
-                    className={`w-full p-2 border rounded-md ${isViewMode ? 'bg-gray-100' : 'focus:ring-blue-500 focus:border-blue-500'}`}
+                    className={`pl-10 w-full rounded-lg border ${
+                      isViewMode 
+                        ? 'bg-gray-50 text-gray-500' 
+                        : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                    } border-gray-300 shadow-sm p-2.5 transition-colors
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                     required
                   >
                     <option value="">Select Department</option>
@@ -158,15 +168,24 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   </select>
                 )}
               </div>
+            </div>
 
-              <div className="mb-4">
-                <label htmlFor="courseId" className="block text-sm font-medium text-gray-700 mb-1">
-                  Course <span className="text-red-500">*</span>
-                </label>
+            {/* Course Field */}
+            <div className="grid grid-cols-1 gap-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Course
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i className="fas fa-book text-gray-400"></i>
+                </div>
                 {loading.courses ? (
-                  <div className="flex items-center justify-center p-2">
-                    <FontAwesomeIcon icon={faSpinner} spin className="text-blue-500" />
-                    <span className="ml-2">Loading courses...</span>
+                  <div className="pl-10 w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50">
+                    <div className="flex items-center">
+                      <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
+                      <span className="text-gray-500">Loading courses...</span>
+                    </div>
                   </div>
                 ) : (
                   <select
@@ -175,31 +194,48 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                     value={currentClass.courseId || ''}
                     onChange={onChange}
                     disabled={isViewMode || !currentClass.departmentId}
-                    className={`w-full p-2 border rounded-md ${isViewMode || !currentClass.departmentId ? 'bg-gray-100' : 'focus:ring-blue-500 focus:border-blue-500'}`}
+                    className={`pl-10 w-full rounded-lg border ${
+                      isViewMode || !currentClass.departmentId
+                        ? 'bg-gray-50 text-gray-500' 
+                        : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                    } border-gray-300 shadow-sm p-2.5 transition-colors
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                     required
                   >
                     <option value="">Select Course</option>
                     {courses.map(course => (
-                      <option key={course.id} value={course.id}>{course.courseName} ({course.courseId})</option>
+                      <option key={course.id} value={course.id}>{course.courseName}</option>
                     ))}
                   </select>
                 )}
                 {!currentClass.departmentId && !isViewMode && (
-                  <p className="text-sm text-gray-500 mt-1">Please select a department first</p>
+                  <p className="text-xs text-gray-500 mt-1 ml-2">Please select a department first</p>
                 )}
               </div>
+            </div>
 
-              <div className="mb-4">
-                <label htmlFor="yearLevel" className="block text-sm font-medium text-gray-700 mb-1">
-                  Year Level <span className="text-red-500">*</span>
-                </label>
+            {/* Year Level Field */}
+            <div className="grid grid-cols-1 gap-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Year Level
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i className="fas fa-layer-group text-gray-400"></i>
+                </div>
                 <select
                   id="yearLevel"
                   name="yearLevel"
                   value={currentClass.yearLevel || ''}
                   onChange={handleYearLevelChange}
                   disabled={isViewMode}
-                  className={`w-full p-2 border rounded-md ${isViewMode ? 'bg-gray-100' : 'focus:ring-blue-500 focus:border-blue-500'}`}
+                  className={`pl-10 w-full rounded-lg border ${
+                    isViewMode 
+                      ? 'bg-gray-50 text-gray-500' 
+                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                  } border-gray-300 shadow-sm p-2.5 transition-colors
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   required
                 >
                   <option value="">Select Year Level</option>
@@ -208,18 +244,30 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   ))}
                 </select>
               </div>
+            </div>
 
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Class Name <span className="text-red-500">*</span>
-                </label>
+            {/* Class Name Field */}
+            <div className="grid grid-cols-1 gap-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Class Name
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i className="fas fa-users text-gray-400"></i>
+                </div>
                 <select
                   id="name"
                   name="name"
                   value={currentClass.name || ''}
                   onChange={onChange}
                   disabled={isViewMode || !currentClass.yearLevel}
-                  className={`w-full p-2 border rounded-md ${isViewMode || !currentClass.yearLevel ? 'bg-gray-100' : 'focus:ring-blue-500 focus:border-blue-500'}`}
+                  className={`pl-10 w-full rounded-lg border ${
+                    isViewMode || !currentClass.yearLevel
+                      ? 'bg-gray-50 text-gray-500' 
+                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                  } border-gray-300 shadow-sm p-2.5 transition-colors
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   required
                 >
                   <option value="">Select Class Name</option>
@@ -228,14 +276,21 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   ))}
                 </select>
                 {!currentClass.yearLevel && !isViewMode && (
-                  <p className="text-sm text-gray-500 mt-1">Please select a year level first</p>
+                  <p className="text-xs text-gray-500 mt-1 ml-2">Please select a year level first</p>
                 )}
               </div>
+            </div>
 
-              <div className="mb-4">
-                <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">
-                  Capacity <span className="text-red-500">*</span>
-                </label>
+            {/* Capacity Field */}
+            <div className="grid grid-cols-1 gap-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Capacity
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i className="fas fa-user-friends text-gray-400"></i>
+                </div>
                 <input
                   type="number"
                   id="capacity"
@@ -245,46 +300,69 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   value={currentClass.capacity || ''}
                   onChange={onChange}
                   disabled={isViewMode}
-                  className={`w-full p-2 border rounded-md ${isViewMode ? 'bg-gray-100' : 'focus:ring-blue-500 focus:border-blue-500'}`}
+                  placeholder="Enter class capacity"
+                  className={`pl-10 w-full rounded-lg border ${
+                    isViewMode 
+                      ? 'bg-gray-50 text-gray-500' 
+                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                  } border-gray-300 shadow-sm p-2.5 transition-colors
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
                   required
                 />
               </div>
-
-              {!isViewMode && (
-                <div className="flex justify-end mt-6 gap-2">
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                  >
-                    {mode === 'add' ? 'Add Class' : 'Update Class'}
-                  </button>
-                </div>
-              )}
-
-              {isViewMode && (
-                <div className="flex justify-end mt-6">
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                  >
-                    Close
-                  </button>
-                </div>
-              )}
-            </form>
+            </div>
           </div>
-        </div>
+
+          {/* Modal Footer */}
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            {!isViewMode ? (
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-6 py-2.5 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 
+                    hover:bg-gray-200 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 
+                    transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
+                    bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
+                    transition-colors flex items-center gap-2"
+                >
+                  <i className={`fas ${mode === 'add' ? 'fa-plus' : 'fa-save'}`}></i>
+                  {mode === 'add' ? 'Add Class' : 'Save Changes'}
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
+                    bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
+                    transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </form>
       </div>
     </div>
   );
+};
+
+ClassModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  mode: PropTypes.oneOf(['add', 'edit', 'view']).isRequired,
+  currentClass: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default ClassModal;
