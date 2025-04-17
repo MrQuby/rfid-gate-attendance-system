@@ -6,7 +6,7 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black bg-opacity-25" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-black/25" onClick={onClose}></div>
       <div className="bg-white rounded-2xl p-6 relative z-10 w-[320px] shadow-xl">
         <div className="text-center">
           <div className="mx-auto flex items-center justify-center h-14 w-14 mb-4">
