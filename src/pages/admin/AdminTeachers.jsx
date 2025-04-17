@@ -289,11 +289,11 @@ const AdminTeachers = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentTeachers.map((teacher, index) => (
-                  <tr key={teacher.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight">
+                  <tr key={teacher.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-blue-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hidden sm:table-cell">
                       {indexOfFirstTeacher + index + 1}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 whitespace-nowrap">
                       <div className="flex items-center">
                         {teacher.profileImageURL ? (
                           <img 

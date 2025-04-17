@@ -296,11 +296,11 @@ const AdminStudents = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentItems.map((student, index) => (
-                  <tr key={student.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight">
+                  <tr key={student.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-blue-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hidden sm:table-cell">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 whitespace-nowrap">
                       <div className="flex items-center">
                         {student.profileImageURL ? (
                           <div className="w-10 h-10 rounded-full overflow-hidden">

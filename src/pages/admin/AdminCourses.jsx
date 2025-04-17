@@ -204,7 +204,7 @@ const AdminCourses = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {currentItems.map((course, index) => (
-                  <tr key={course.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight">
+                  <tr key={course.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-blue-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hidden sm:table-cell">
                       {indexOfFirstItem + index + 1}
                     </td>

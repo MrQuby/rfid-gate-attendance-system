@@ -252,7 +252,7 @@ const AdminClasses = () => {
                 {currentItems.map((classItem, index) => (
                   <tr 
                     key={classItem.id} 
-                    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+                    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-blue-50 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hidden sm:table-cell">
                       {indexOfFirstItem + index + 1}
