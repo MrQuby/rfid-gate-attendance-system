@@ -12,17 +12,15 @@ const SearchBar = ({
   inputClassName = ''
 }) => {
   return (
-    <div className={`flex gap-2 ${className}`}>
-      <div className="relative">
-        <input
-          type="text"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={`pl-10 pr-4 py-2 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${inputClassName}`}
-        />
-        <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-      </div>
+    <div className={`relative flex items-center ${className}`}>
+      <i className="fas fa-search absolute left-3 z-10 text-gray-400 pointer-events-none"></i>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`w-full pl-10 pr-4 py-2 border-2 border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500 transition-colors ${inputClassName}`}
+      />
     </div>
   );
 };
