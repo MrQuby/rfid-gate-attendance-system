@@ -13,7 +13,7 @@ const DepartmentModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 max-w-lg w-full mx-2">
         {/* Modal Header */}
         <div className="flex justify-between items-center pb-4 border-b border-gray-200">

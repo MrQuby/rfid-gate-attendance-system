@@ -33,7 +33,7 @@ const SuccessModal = ({ isOpen, title, message, onContinue, autoCloseTime = 2 })
 
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      <div className="absolute inset-0 bg-black bg-opacity-25"></div>
+      <div className="absolute inset-0 bg-black/25"></div>
       <div className="bg-white rounded-2xl p-6 relative z-10 transform transition-transform duration-300 scale-100 w-[320px] shadow-xl">
         <div className="text-center">
           <div className="mx-auto flex items-center justify-center h-14 w-14 mb-2">
