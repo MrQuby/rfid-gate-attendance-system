@@ -20,10 +20,10 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="w-[14%] md:w-[8%] lg:w-[16%] xl:w-[14%] bg-[#2C3E50] text-white">
+    <div className="w-[14%] md:w-[8%] lg:w-[16%] xl:w-[14%] bg-red-900 text-white">
       <div className="p-4">
         <div className="flex items-center justify-center lg:justify-start gap-3 mb-8">
-          <img src="/graduation-cap.svg" alt="Logo" className="w-8 h-8" />
+          <img src="/src/assets/SCC logo.png" alt="Logo" className="w-8 h-8" />
           <h1 className="text-lg font-bold hidden md:hidden lg:block">SCC-ITECH SOCIETY</h1>
         </div>
 
@@ -100,7 +100,7 @@ const AdminSidebar = () => {
 
           <button
             onClick={() => setShowLogoutModal(true)}
-            className="w-full flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg text-red-300 hover:bg-red-600 hover:text-white"
+            className="w-full flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg hover:bg-red-600 hover:text-white"
           >
             <i className="fas fa-sign-out-alt w-5 lg:w-6 text-center"></i>
             <span className="ml-4 hidden md:hidden lg:inline-block">Logout</span>
