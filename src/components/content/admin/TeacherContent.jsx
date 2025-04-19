@@ -218,8 +218,8 @@ const TeacherContent = () => {
   // Helper function to get background color based on name
   const getProfileColor = (firstName, lastName) => {
     const colors = [
-      'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-red-500', 
-      'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500'
+      'bg-red-500', 'bg-red-600', 'bg-red-700', 'bg-red-800', 
+      'bg-orange-500', 'bg-yellow-500', 'bg-pink-500', 'bg-rose-500'
     ];
     
     const fullName = `${firstName}${lastName}`;

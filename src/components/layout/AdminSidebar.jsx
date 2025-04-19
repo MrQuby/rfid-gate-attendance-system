@@ -31,7 +31,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/dashboard"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath === '/admin/dashboard' ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath === '/admin/dashboard' ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-th-large w-5 lg:w-6 text-center"></i>
@@ -41,7 +41,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/students"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/students') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/students') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-user-graduate w-5 lg:w-6 text-center"></i>
@@ -51,7 +51,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/teachers"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/teachers') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/teachers') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-chalkboard-teacher w-5 lg:w-6 text-center"></i>
@@ -61,7 +61,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/departments"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/departments') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/departments') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-building w-5 lg:w-6 text-center"></i>
@@ -71,7 +71,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/courses"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/courses') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/courses') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-book w-5 lg:w-6 text-center"></i>
@@ -81,7 +81,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/classes"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/classes') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/classes') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-chalkboard w-5 lg:w-6 text-center"></i>
@@ -91,7 +91,7 @@ const AdminSidebar = () => {
           <Link
             to="/admin/user-logs"
             className={`flex items-center justify-center lg:justify-start px-4 py-3 rounded-lg ${
-              currentPath.startsWith('/admin/user-logs') ? 'bg-blue-600' : 'hover:bg-blue-600'
+              currentPath.startsWith('/admin/user-logs') ? 'bg-red-600' : 'hover:bg-red-600'
             }`}
           >
             <i className="fas fa-history w-5 lg:w-6 text-center"></i>

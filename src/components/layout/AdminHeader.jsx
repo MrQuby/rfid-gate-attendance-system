@@ -65,7 +65,7 @@ const AdminHeader = ({ title }) => {
             <span className="mx-2">
               <i className="fas fa-chevron-right text-xs"></i>
             </span>
-            <span className="text-blue-600 font-medium">{title}</span>
+            <span className="text-red-600 font-medium">{title}</span>
           </div>
         </div>
         <div className="text-sm text-gray-500 mt-1">
@@ -75,7 +75,7 @@ const AdminHeader = ({ title }) => {
       
       <div className="flex items-center space-x-4">
         <div className="relative">
-          <button className="text-gray-600 hover:text-blue-600 focus:outline-none">
+          <button className="text-gray-600 hover:text-red-600 focus:outline-none">
             <i className="fas fa-bell text-xl"></i>
             {notificationCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -89,7 +89,7 @@ const AdminHeader = ({ title }) => {
             <div className="text-sm font-semibold">{displayName}</div>
             <div className="text-xs text-gray-500">{userRole}</div>
           </div>
-          <div className="h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
+          <div className="h-10 w-10 rounded-full bg-red-600 flex items-center justify-center text-white">
             {avatarInitial}
           </div>
         </div>
