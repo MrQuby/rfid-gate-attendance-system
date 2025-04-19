@@ -53,7 +53,7 @@ const DashboardContent = () => {
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-md shadow-md m-4 mt-0">
+    <div className="bg-white p-6 mt-4 rounded-md shadow-md m-4 mt-0">
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-gray-800">Dashboard Overview</h2>
