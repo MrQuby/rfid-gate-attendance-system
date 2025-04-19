@@ -8,8 +8,6 @@ import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
 import { toast } from 'react-toastify';
 import Pagination from '../../common/Pagination';
 import SearchBar from '../../common/SearchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ClassesContent = () => {
   const [classes, setClasses] = useState([]);
@@ -216,7 +214,7 @@ const ClassesContent = () => {
           />
           <button
             onClick={() => handleOpenModal('add')}
-            className="px-4 py-2 bg-emerald-600 text-white rounded-3xl hover:bg-emerald-700 flex items-center gap-2"
+            className="px-4 py-2 bg-red-600 text-white rounded-3xl hover:bg-red-700 flex items-center gap-2"
           >
             <i className="fas fa-plus"></i>
           </button>
@@ -226,7 +224,7 @@ const ClassesContent = () => {
       {/* Classes Table */}
       <main className="w-full mt-4 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-red-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                 #
@@ -253,7 +251,7 @@ const ClassesContent = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {currentItems.map((classItem, index) => (
-              <tr key={classItem.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-blue-50 transition-colors">
+              <tr key={classItem.id} className="border-b border-gray-200 even:bg-red-50/50 text-sm hover:bg-red-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 hidden sm:table-cell">
                   {indexOfFirstItem + index + 1}
                 </td>
@@ -303,21 +301,21 @@ const ClassesContent = () => {
                   <div className="flex items-center gap-2 justify-center">
                     <button
                       onClick={() => handleOpenModal('view', classItem)}
-                      className="text-blue-600 hover:text-blue-900 bg-blue-100 hover:bg-blue-200 px-2.5 py-1 rounded-lg transition duration-200"
+                      className="text-blue-500 hover:text-blue-700 bg-blue-200 hover:bg-blue-300 px-2.5 py-1 rounded-lg transition duration-200"
                       title="View"
                     >
                       <i className="fas fa-eye"></i>
                     </button>
                     <button
                       onClick={() => handleOpenModal('edit', classItem)}
-                      className="text-green-600 hover:text-green-900 bg-green-100 hover:bg-green-200 px-2.5 py-1 rounded-lg transition duration-200"
+                      className="text-green-500 hover:text-green-700 bg-green-200 hover:bg-green-300 px-2.5 py-1 rounded-lg transition duration-200"
                       title="Edit"
                     >
                       <i className="fas fa-edit"></i>
                     </button>
                     <button
                       onClick={() => handleOpenDeleteModal(classItem)}
-                      className="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-2.5 py-1 rounded-lg transition duration-200"
+                      className="text-red-500 hover:text-red-700 bg-red-200 hover:bg-red-300 px-2.5 py-1 rounded-lg transition duration-200"
                       title="Delete"
                     >
                       <i className="fas fa-trash-alt"></i>

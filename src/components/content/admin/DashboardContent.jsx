@@ -66,43 +66,31 @@ const DashboardContent = () => {
 
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
         </div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <div className="bg-blue-50 p-6 rounded-lg shadow border border-blue-100">
+            <div className="bg-red-50 p-6 rounded-lg shadow border border-red-100">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-blue-500 font-medium">Total Students</p>
-                  <h3 className="text-2xl font-bold text-blue-700">{totalStudents}</h3>
+                  <p className="text-sm text-red-500 font-medium">Total Students</p>
+                  <h3 className="text-2xl font-bold text-red-700">{totalStudents}</h3>
                 </div>
-                <div className="p-3 bg-blue-500 rounded-full">
+                <div className="p-3 bg-red-500 rounded-full">
                   <i className="fas fa-user-graduate text-white"></i>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-50 p-6 rounded-lg shadow border border-green-100">
+            <div className="bg-orange-50 p-6 rounded-lg shadow border border-orange-100">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-green-500 font-medium">Total Teachers</p>
-                  <h3 className="text-2xl font-bold text-green-700">{totalTeachers}</h3>
+                  <p className="text-sm text-orange-500 font-medium">Total Teachers</p>
+                  <h3 className="text-2xl font-bold text-orange-700">{totalTeachers}</h3>
                 </div>
-                <div className="p-3 bg-green-500 rounded-full">
+                <div className="p-3 bg-orange-500 rounded-full">
                   <i className="fas fa-chalkboard-teacher text-white"></i>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-purple-50 p-6 rounded-lg shadow border border-purple-100">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-purple-500 font-medium">Active Courses</p>
-                  <h3 className="text-2xl font-bold text-purple-700">12</h3>
-                </div>
-                <div className="p-3 bg-purple-500 rounded-full">
-                  <i className="fas fa-book text-white"></i>
                 </div>
               </div>
             </div>
@@ -110,10 +98,22 @@ const DashboardContent = () => {
             <div className="bg-yellow-50 p-6 rounded-lg shadow border border-yellow-100">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-yellow-500 font-medium">Departments</p>
-                  <h3 className="text-2xl font-bold text-yellow-700">4</h3>
+                  <p className="text-sm text-yellow-500 font-medium">Active Courses</p>
+                  <h3 className="text-2xl font-bold text-yellow-700">12</h3>
                 </div>
                 <div className="p-3 bg-yellow-500 rounded-full">
+                  <i className="fas fa-book text-white"></i>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-rose-50 p-6 rounded-lg shadow border border-rose-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-rose-500 font-medium">Departments</p>
+                  <h3 className="text-2xl font-bold text-rose-700">4</h3>
+                </div>
+                <div className="p-3 bg-rose-500 rounded-full">
                   <i className="fas fa-building text-white"></i>
                 </div>
               </div>
