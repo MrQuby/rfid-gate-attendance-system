@@ -8,6 +8,8 @@ import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
 import { toast } from 'react-toastify';
 import Pagination from '../common/Pagination';
 import SearchBar from '../common/SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ClassesContent = () => {
   const [classes, setClasses] = useState([]);
@@ -15,8 +17,8 @@ const ClassesContent = () => {
   const [modalMode, setModalMode] = useState('add');
   const [currentClass, setCurrentClass] = useState({
     name: '',
-    capacity: '',
-    yearLevel: '',
+    capacity: 50,
+    yearLevel: '1st',
     departmentId: '',
     courseId: ''
   });
@@ -28,6 +30,7 @@ const ClassesContent = () => {
   const [departmentMap, setDepartmentMap] = useState({});
   const [courseMap, setCourseMap] = useState({});
   const [enrollmentCounts, setEnrollmentCounts] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Set up real-time listener for classes
@@ -110,14 +113,19 @@ const ClassesContent = () => {
     });
   };
 
-  const handleInputChange = (field, value) => {
-    setCurrentClass({
-      ...currentClass,
-      [field]: value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentClass(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    setLoading(true);
     try {
       if (modalMode === 'add') {
         await addClass(currentClass);
@@ -130,6 +138,8 @@ const ClassesContent = () => {
     } catch (error) {
       console.error('Error submitting class:', error);
       toast.error('Failed to save class');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,6 +151,7 @@ const ClassesContent = () => {
   const handleDeleteClass = async () => {
     if (!classToDelete) return;
     
+    setLoading(true);
     try {
       await deleteClass(classToDelete.id);
       toast.success('Class deleted successfully');
@@ -149,6 +160,8 @@ const ClassesContent = () => {
     } catch (error) {
       console.error('Error deleting class:', error);
       toast.error('Failed to delete class');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -343,6 +356,7 @@ const ClassesContent = () => {
         currentClass={currentClass}
         onSubmit={handleSubmit}
         onChange={handleInputChange}
+        loading={loading}
         departments={Object.entries(departmentMap).map(([id, name]) => ({ id, name }))}
         courses={Object.values(courseMap)}
       />
@@ -355,6 +369,7 @@ const ClassesContent = () => {
         title="Delete Class"
         message={`Are you sure you want to delete the class "${classToDelete?.name}"?`}
         confirmButtonText="Delete"
+        loading={loading}
       />
     </div>
   );

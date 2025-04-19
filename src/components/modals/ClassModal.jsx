@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getDepartments } from '../../api/departments';
 import { getCoursesByDepartment } from '../../api/courses';
 
-const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange }) => {
+const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange, loading = false }) => {
   const [departments, setDepartments] = useState([]);
   const [courses, setCourses] = useState([]);
   const [classNameOptions, setClassNameOptions] = useState([]);
-  const [loading, setLoading] = useState({
+  const [loadingState, setLoadingState] = useState({
     departments: false,
     courses: false
   });
@@ -16,13 +18,13 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        setLoading(prev => ({ ...prev, departments: true }));
+        setLoadingState(prev => ({ ...prev, departments: true }));
         const departmentsData = await getDepartments();
         setDepartments(departmentsData);
       } catch (error) {
         console.error('Error fetching departments:', error);
       } finally {
-        setLoading(prev => ({ ...prev, departments: false }));
+        setLoadingState(prev => ({ ...prev, departments: false }));
       }
     };
 
@@ -40,13 +42,13 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
       }
       
       try {
-        setLoading(prev => ({ ...prev, courses: true }));
+        setLoadingState(prev => ({ ...prev, courses: true }));
         const coursesData = await getCoursesByDepartment(currentClass.departmentId);
         setCourses(coursesData);
       } catch (error) {
         console.error('Error fetching courses:', error);
       } finally {
-        setLoading(prev => ({ ...prev, courses: false }));
+        setLoadingState(prev => ({ ...prev, courses: false }));
       }
     };
 
@@ -121,6 +123,7 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
           </div>
           <button 
             onClick={onClose} 
+            disabled={loading}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <i className="fas fa-times text-gray-500 text-xl"></i>
@@ -139,11 +142,11 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <i className="fas fa-building text-gray-400"></i>
                 </div>
-                {loading.departments ? (
+                {loadingState.departments ? (
                   <div className="pl-10 w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50">
                     <div className="flex items-center">
-                      <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
-                      <span className="text-gray-500">Loading departments...</span>
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                      <span>Loading departments...</span>
                     </div>
                   </div>
                 ) : (
@@ -152,9 +155,9 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                     name="departmentId"
                     value={currentClass.departmentId || ''}
                     onChange={handleDepartmentChange}
-                    disabled={isViewMode}
+                    disabled={isViewMode || loading}
                     className={`pl-10 w-full rounded-lg border ${
-                      isViewMode 
+                      isViewMode || loading 
                         ? 'bg-gray-50 text-gray-500' 
                         : 'bg-white hover:border-gray-400 focus:border-blue-500'
                     } border-gray-300 shadow-sm p-2.5 transition-colors
@@ -180,11 +183,11 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <i className="fas fa-book text-gray-400"></i>
                 </div>
-                {loading.courses ? (
+                {loadingState.courses ? (
                   <div className="pl-10 w-full rounded-lg border border-gray-300 p-2.5 bg-gray-50">
                     <div className="flex items-center">
-                      <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
-                      <span className="text-gray-500">Loading courses...</span>
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                      <span>Loading courses...</span>
                     </div>
                   </div>
                 ) : (
@@ -193,9 +196,9 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                     name="courseId"
                     value={currentClass.courseId || ''}
                     onChange={onChange}
-                    disabled={isViewMode || !currentClass.departmentId}
+                    disabled={isViewMode || loading || !currentClass.departmentId}
                     className={`pl-10 w-full rounded-lg border ${
-                      isViewMode || !currentClass.departmentId
+                      isViewMode || loading || !currentClass.departmentId
                         ? 'bg-gray-50 text-gray-500' 
                         : 'bg-white hover:border-gray-400 focus:border-blue-500'
                     } border-gray-300 shadow-sm p-2.5 transition-colors
@@ -204,7 +207,7 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   >
                     <option value="">Select Course</option>
                     {courses.map(course => (
-                      <option key={course.id} value={course.id}>{course.courseName}</option>
+                      <option key={course.id} value={course.id}>{course.courseId}</option>
                     ))}
                   </select>
                 )}
@@ -229,9 +232,9 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   name="yearLevel"
                   value={currentClass.yearLevel || ''}
                   onChange={handleYearLevelChange}
-                  disabled={isViewMode}
+                  disabled={isViewMode || loading}
                   className={`pl-10 w-full rounded-lg border ${
-                    isViewMode 
+                    isViewMode || loading 
                       ? 'bg-gray-50 text-gray-500' 
                       : 'bg-white hover:border-gray-400 focus:border-blue-500'
                   } border-gray-300 shadow-sm p-2.5 transition-colors
@@ -261,9 +264,9 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   name="name"
                   value={currentClass.name || ''}
                   onChange={onChange}
-                  disabled={isViewMode || !currentClass.yearLevel}
+                  disabled={isViewMode || loading || !currentClass.yearLevel}
                   className={`pl-10 w-full rounded-lg border ${
-                    isViewMode || !currentClass.yearLevel
+                    isViewMode || loading || !currentClass.yearLevel
                       ? 'bg-gray-50 text-gray-500' 
                       : 'bg-white hover:border-gray-400 focus:border-blue-500'
                   } border-gray-300 shadow-sm p-2.5 transition-colors
@@ -299,10 +302,10 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                   max="500"
                   value={currentClass.capacity || ''}
                   onChange={onChange}
-                  disabled={isViewMode}
+                  disabled={isViewMode || loading}
                   placeholder="Enter class capacity"
                   className={`pl-10 w-full rounded-lg border ${
-                    isViewMode 
+                    isViewMode || loading 
                       ? 'bg-gray-50 text-gray-500' 
                       : 'bg-white hover:border-gray-400 focus:border-blue-500'
                   } border-gray-300 shadow-sm p-2.5 transition-colors
@@ -320,6 +323,7 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                 <button
                   type="button"
                   onClick={onClose}
+                  disabled={loading}
                   className="px-6 py-2.5 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 
                     hover:bg-gray-200 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 
                     transition-colors"
@@ -328,12 +332,22 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                 </button>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
                     bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
-                    transition-colors flex items-center gap-2"
+                    transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  <i className={`fas ${mode === 'add' ? 'fa-plus' : 'fa-save'}`}></i>
-                  {mode === 'add' ? 'Add Class' : 'Save Changes'}
+                  {loading ? (
+                    <>
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className={`fas ${mode === 'add' ? 'fa-plus' : 'fa-save'}`}></i>
+                      {mode === 'add' ? 'Add Class' : 'Save Changes'}
+                    </>
+                  )}
                 </button>
               </div>
             ) : (
@@ -341,6 +355,7 @@ const ClassModal = ({ isOpen, onClose, mode, currentClass, onSubmit, onChange })
                 <button
                   type="button"
                   onClick={onClose}
+                  disabled={loading}
                   className="px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
                     bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
                     transition-colors"
@@ -362,7 +377,8 @@ ClassModal.propTypes = {
   mode: PropTypes.oneOf(['add', 'edit', 'view']).isRequired,
   currentClass: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default ClassModal;
