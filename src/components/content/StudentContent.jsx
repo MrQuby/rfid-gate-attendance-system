@@ -65,11 +65,11 @@ const StudentContent = () => {
         setClasses(updatedClasses);
         
         // Create class map for display
-        const clsMap = {};
+        const classMap = {};
         updatedClasses.forEach(cls => {
-          clsMap[cls.id] = cls.name;
+          classMap[cls.id] = cls.name;
         });
-        setClassMap(clsMap);
+        setClassMap(classMap);
       }
     });
 
@@ -81,8 +81,8 @@ const StudentContent = () => {
         const courseMap = {};
         updatedCourses.forEach(course => {
           courseMap[course.id] = {
-            name: course.title || course.courseName,
-            code: course.code || course.courseId
+            name: course.courseName,
+            code: course.courseId
           };
         });
         setCourseMap(courseMap);
@@ -147,11 +147,12 @@ const StudentContent = () => {
     setModalOpen(false);
   };
 
-  const handleInputChange = (field, value) => {
-    setCurrentStudent({
-      ...currentStudent,
-      [field]: value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentStudent(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = async () => {
@@ -377,9 +378,6 @@ const StudentContent = () => {
         onSubmit={handleSubmit}
         onChange={handleInputChange}
         loading={loading}
-        departments={departments}
-        courses={courses}
-        classes={classes}
       />
 
       {/* Delete Confirmation Modal */}
