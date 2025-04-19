@@ -10,13 +10,9 @@ import SearchBar from '../common/SearchBar';
 const CoursesContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [courses, setCourses] = useState([]);
+  const [currentCourse, setCurrentCourse] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState('add'); // 'add', 'edit', 'view'
-  const [currentCourse, setCurrentCourse] = useState({
-    courseId: '',
-    courseName: '',
-    description: ''
-  });
+  const [modalMode, setModalMode] = useState('add');
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     courseId: null,
@@ -26,6 +22,7 @@ const CoursesContent = () => {
   const [itemsPerPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Initial fetch for courses and departments
@@ -55,8 +52,9 @@ const CoursesContent = () => {
     };
   }, []);
 
-  const openModal = (mode, course = null) => {
+  const handleOpenModal = (mode, course = null) => {
     setModalMode(mode);
+    
     if (course) {
       setCurrentCourse({
         ...course
@@ -64,8 +62,7 @@ const CoursesContent = () => {
     } else {
       setCurrentCourse({
         courseId: '',
-        code: '',
-        title: '',
+        courseName: '',
         description: '',
         department: '',
         credits: 3
@@ -74,28 +71,15 @@ const CoursesContent = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCurrentCourse({
-      courseId: '',
-      code: '',
-      title: '',
-      description: '',
-      department: '',
-      credits: 3
-    });
   };
 
-  const handleInputChange = (field, value) => {
-    setCurrentCourse({
-      ...currentCourse,
-      [field]: value
-    });
-  };
-
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    setLoading(true);
     try {
       if (modalMode === 'add') {
         await addCourse(currentCourse);
@@ -104,13 +88,21 @@ const CoursesContent = () => {
         await updateCourse(currentCourse.id, currentCourse);
         toast.success('Course updated successfully');
       }
-      closeModal();
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Error submitting course:', error);
       toast.error('Failed to save course');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentCourse(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleOpenDeleteModal = (course) => {
@@ -189,7 +181,7 @@ const CoursesContent = () => {
             onChange={setSearchQuery}
           />
           <button
-            onClick={() => openModal('add')}
+            onClick={() => handleOpenModal('add')}
             className="px-4 py-2 bg-emerald-600 text-white rounded-3xl hover:bg-emerald-700 flex items-center gap-2"
           >
             <i className="fas fa-plus"></i>
@@ -246,14 +238,14 @@ const CoursesContent = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex items-center gap-2 justify-center">
                     <button
-                      onClick={() => openModal('view', course)}
+                      onClick={() => handleOpenModal('view', course)}
                       className="text-blue-600 hover:text-blue-900 bg-blue-100 hover:bg-blue-200 px-2.5 py-1 rounded-lg transition duration-200"
                       title="View"
                     >
                       <i className="fas fa-eye"></i>
                     </button>
                     <button
-                      onClick={() => openModal('edit', course)}
+                      onClick={() => handleOpenModal('edit', course)}
                       className="text-green-600 hover:text-green-900 bg-green-100 hover:bg-green-200 px-2.5 py-1 rounded-lg transition duration-200"
                       title="Edit"
                     >
@@ -297,10 +289,10 @@ const CoursesContent = () => {
         isOpen={isModalOpen}
         mode={modalMode}
         course={currentCourse}
-        onClose={closeModal}
+        onClose={handleCloseModal}
         onSubmit={handleSubmit}
         onChange={handleInputChange}
-        isLoading={isLoading}
+        loading={loading}
         departments={departments}
       />
 
