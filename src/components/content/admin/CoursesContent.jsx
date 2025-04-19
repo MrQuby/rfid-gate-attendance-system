@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import CourseModal from '../modals/CourseModal';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
-import { getCourses, addCourse, updateCourse, deleteCourse, subscribeToCourses } from '../../api/courses';
-import { getDepartments, subscribeToDepartments } from '../../api/departments';
+import CourseModal from '../../modals/CourseModal';
+import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
+import { getCourses, addCourse, updateCourse, deleteCourse, subscribeToCourses } from '../../../api/courses';
+import { getDepartments, subscribeToDepartments } from '../../../api/departments';
 import { toast } from 'react-toastify';
-import Pagination from '../common/Pagination';
-import SearchBar from '../common/SearchBar';
+import Pagination from '../../common/Pagination';
+import SearchBar from '../../common/SearchBar';
 
 const CoursesContent = () => {
   const [searchQuery, setSearchQuery] = useState('');

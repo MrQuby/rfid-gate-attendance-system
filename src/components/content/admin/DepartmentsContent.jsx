@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getDepartments, addDepartment, updateDepartment, deleteDepartment, restoreDepartment, subscribeToDepartments } from '../../api/departments';
-import DepartmentModal from '../modals/DepartmentModal';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
+import { getDepartments, addDepartment, updateDepartment, deleteDepartment, restoreDepartment, subscribeToDepartments } from '../../../api/departments';
+import DepartmentModal from '../../modals/DepartmentModal';
+import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
 import { toast } from 'react-toastify';
-import Pagination from '../common/Pagination';
-import SearchBar from '../common/SearchBar';
+import Pagination from '../../common/Pagination';
+import SearchBar from '../../common/SearchBar';
 
 const DepartmentsContent = () => {
   const [departments, setDepartments] = useState([]);

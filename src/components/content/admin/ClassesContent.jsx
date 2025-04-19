@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getClasses, addClass, updateClass, deleteClass, restoreClass, subscribeToClasses } from '../../api/classes';
-import { getDepartments } from '../../api/departments';
-import { getCourses } from '../../api/courses';
-import { getStudentsByClass, subscribeToStudentsByClass } from '../../api/students';
-import ClassModal from '../modals/ClassModal';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
+import { getClasses, addClass, updateClass, deleteClass, restoreClass, subscribeToClasses } from '../../../api/classes';
+import { getDepartments } from '../../../api/departments';
+import { getCourses } from '../../../api/courses';
+import { getStudentsByClass, subscribeToStudentsByClass } from '../../../api/students';
+import ClassModal from '../../modals/ClassModal';
+import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
 import { toast } from 'react-toastify';
-import Pagination from '../common/Pagination';
-import SearchBar from '../common/SearchBar';
+import Pagination from '../../common/Pagination';
+import SearchBar from '../../common/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getStudents, deleteStudent, subscribeToStudents, addStudent, updateStudent } from '../../api/students';
-import { getDepartments, subscribeToDepartments } from '../../api/departments';
-import { getClasses, subscribeToClasses } from '../../api/classes';
-import { getCourses, subscribeToCourses } from '../../api/courses';
+import { getStudents, deleteStudent, subscribeToStudents, addStudent, updateStudent } from '../../../api/students';
+import { getDepartments, subscribeToDepartments } from '../../../api/departments';
+import { getClasses, subscribeToClasses } from '../../../api/classes';
+import { getCourses, subscribeToCourses } from '../../../api/courses';
 import { toast } from 'react-toastify';
-import StudentModal from '../modals/StudentModal';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
-import Pagination from '../common/Pagination';
-import SearchBar from '../common/SearchBar';
+import StudentModal from '../../modals/StudentModal';
+import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
+import Pagination from '../../common/Pagination';
+import SearchBar from '../../common/SearchBar';
 
 const StudentContent = () => {
   const [students, setStudents] = useState([]);

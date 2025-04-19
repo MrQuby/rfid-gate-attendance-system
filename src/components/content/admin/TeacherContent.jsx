@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getTeachers, addTeacher, updateTeacher, deleteTeacher, subscribeToTeachers } from '../../api/teachers';
-import { getDepartments, subscribeToDepartments } from '../../api/departments';
-import { getClasses, subscribeToClasses } from '../../api/classes';
-import { getCourses, subscribeToCourses } from '../../api/courses';
+import { getTeachers, addTeacher, updateTeacher, deleteTeacher, subscribeToTeachers } from '../../../api/teachers';
+import { getDepartments, subscribeToDepartments } from '../../../api/departments';
+import { getClasses, subscribeToClasses } from '../../../api/classes';
+import { getCourses, subscribeToCourses } from '../../../api/courses';
 import { toast } from 'react-toastify';
-import TeacherModal from '../modals/TeacherModal';
-import DeleteConfirmationModal from '../modals/DeleteConfirmationModal';
-import Pagination from '../common/Pagination';
-import SearchBar from '../common/SearchBar';
+import TeacherModal from '../../modals/TeacherModal';
+import DeleteConfirmationModal from '../../modals/DeleteConfirmationModal';
+import Pagination from '../../common/Pagination';
+import SearchBar from '../../common/SearchBar';
 
 const TeacherContent = () => {
   const [teachers, setTeachers] = useState([]);

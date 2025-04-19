@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebase';
-import StudentCountChart from '../charts/StudentCountChart';
-import AttendanceChart from '../charts/AttendanceChart';
+import { db } from '../../../config/firebase';
+import StudentCountChart from '../../charts/StudentCountChart';
+import AttendanceChart from '../../charts/AttendanceChart';
 
 const DashboardContent = () => {
   const [totalStudents, setTotalStudents] = useState(0);

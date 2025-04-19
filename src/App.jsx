@@ -9,12 +9,12 @@ import TeacherStudents from './pages/teacher/TeacherStudents';
 import RfidAttendanceMonitor from './pages/attendance/RfidAttendanceMonitor';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminLayout from './components/layout/AdminLayout';
-import TeacherContent from './components/content/TeacherContent';
-import DashboardContent from './components/content/DashboardContent';
-import StudentContent from './components/content/StudentContent';
-import CoursesContent from './components/content/CoursesContent';
-import ClassesContent from './components/content/ClassesContent';
-import DepartmentsContent from './components/content/DepartmentsContent';
+import AdminTeacher from './components/content/admin/TeacherContent';
+import AdminDashboard from './components/content/admin/DashboardContent';
+import AdminStudent from './components/content/admin/StudentContent';
+import AdminCourses from './components/content/admin/CoursesContent';
+import AdminClasses from './components/content/admin/ClassesContent';
+import AdminDepartments from './components/content/admin/DepartmentsContent';
 import './App.css';
 
 function App() {
@@ -51,30 +51,30 @@ function App() {
         >
           <Route 
             path="dashboard" 
-            element={<DashboardContent />}
+            element={<AdminDashboard />}
           />
           <Route 
             path="students" 
-            element={<StudentContent />}
+            element={<AdminStudent />}
           />
           <Route 
             path="teachers" 
-            element={<TeacherContent />}
+            element={<AdminTeacher />}
           />
           <Route 
             path="departments" 
-            element={<DepartmentsContent />}
+            element={<AdminDepartments />}
           />
           <Route 
             path="courses" 
-            element={<CoursesContent />}
+            element={<AdminCourses />}
           />
           <Route 
             path="classes" 
-            element={<ClassesContent />}
+            element={<AdminClasses />}
           />
           {/* Redirect to dashboard by default */}
-          <Route index element={<DashboardContent />} />
+          <Route index element={<AdminDashboard />} />
         </Route>
         
         {/* Attendance Monitor */}
