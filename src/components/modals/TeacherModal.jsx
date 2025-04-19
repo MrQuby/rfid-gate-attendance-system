@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { getClasses } from '../../api/classes';
 import { getCourses } from '../../api/courses';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const TeacherModal = ({ 
   isOpen, 
@@ -10,11 +12,12 @@ const TeacherModal = ({
   teacher, 
   onSubmit, 
   onInputChange,
-  departments = []
+  departments = [],
+  loading = false
 }) => {
   const [classes, setClasses] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [innerLoading, setInnerLoading] = useState(false);
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [classesByCourse, setClassesByCourse] = useState({});
@@ -54,7 +57,7 @@ const TeacherModal = ({
   
   const fetchData = async () => {
     try {
-      setLoading(true);
+      setInnerLoading(true);
       
       // Fetch courses
       const coursesData = await getCourses();
@@ -78,7 +81,7 @@ const TeacherModal = ({
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
-      setLoading(false);
+      setInnerLoading(false);
     }
   };
   
@@ -240,7 +243,7 @@ const TeacherModal = ({
                           onChange={handleImageChange}
                           className="hidden"
                           ref={fileInputRef}
-                          disabled={uploadingImage}
+                          disabled={loading}
                         />
                         <button
                           type="button"
@@ -248,7 +251,7 @@ const TeacherModal = ({
                           className="px-3 py-1.5 bg-blue-600 text-white rounded-lg shadow-sm text-sm font-medium
                             hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
                             transition-colors flex items-center"
-                          disabled={uploadingImage}
+                          disabled={loading}
                         >
                           <i className="fas fa-upload mr-2"></i>
                           Select Image
@@ -261,7 +264,7 @@ const TeacherModal = ({
                             className="px-3 py-1.5 bg-red-600 text-white rounded-lg shadow-sm text-sm font-medium
                               hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 
                               transition-colors flex items-center"
-                            disabled={uploadingImage}
+                            disabled={loading}
                           >
                             <i className="fas fa-trash mr-2"></i>
                             Remove
@@ -411,9 +414,9 @@ const TeacherModal = ({
                 <label className="block text-sm font-semibold text-gray-700">
                   Assigned Courses
                 </label>
-                {loading ? (
+                {innerLoading ? (
                   <div className="flex items-center justify-center p-4 border border-gray-300 rounded-lg">
-                    <i className="fas fa-spinner spin text-blue-500 mr-2"></i>
+                    <FontAwesomeIcon icon={faSpinner} spin className="text-blue-500 mr-2" />
                     <span>Loading courses...</span>
                   </div>
                 ) : (
@@ -455,9 +458,9 @@ const TeacherModal = ({
                 <label className="block text-sm font-semibold text-gray-700">
                   Assigned Classes
                 </label>
-                {loading ? (
+                {innerLoading ? (
                   <div className="flex items-center justify-center p-4 border border-gray-300 rounded-lg">
-                    <i className="fas fa-spinner spin text-blue-500 mr-2"></i>
+                    <FontAwesomeIcon icon={faSpinner} spin className="text-blue-500 mr-2" />
                     <span>Loading classes...</span>
                   </div>
                 ) : (
@@ -524,20 +527,20 @@ const TeacherModal = ({
             </button>
             {mode !== 'view' && (
               <button
-                type="submit"
-                onClick={handleSubmit}
-                className="px-6 py-2.5 bg-blue-600 text-white rounded-lg shadow-sm text-sm font-medium
-                  hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
-                  transition-colors"
-                disabled={uploadingImage}
+                type="button"
+                onClick={onSubmit}
+                disabled={loading}
+                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg 
+                  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
+                  transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
               >
-                {uploadingImage ? (
+                {loading ? (
                   <>
-                    <i className="fas fa-spinner spin mr-2"></i>
-                    {mode === 'add' ? 'Creating...' : 'Updating...'}
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                    Saving...
                   </>
                 ) : (
-                  mode === 'add' ? 'Create Teacher' : 'Update Teacher'
+                  'Save'
                 )}
               </button>
             )}
@@ -570,7 +573,8 @@ TeacherModal.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     })
-  )
+  ),
+  loading: PropTypes.bool
 };
 
 export default TeacherModal;

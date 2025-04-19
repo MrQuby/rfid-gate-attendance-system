@@ -34,6 +34,7 @@ const TeacherContent = () => {
   const [departmentMap, setDepartmentMap] = useState({});
   const [classMap, setClassMap] = useState({});
   const [courseMap, setCourseMap] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribeTeachers = subscribeToTeachers((updatedTeachers) => {
@@ -149,6 +150,7 @@ const TeacherContent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (modalMode === 'add') {
         await addTeacher(currentTeacher);
@@ -161,6 +163,8 @@ const TeacherContent = () => {
     } catch (error) {
       console.error('Error submitting teacher:', error);
       toast.error('Failed to save teacher');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -384,6 +388,7 @@ const TeacherContent = () => {
         onSubmit={handleSubmit}
         onInputChange={handleInputChange}
         departments={departments}
+        loading={loading}
       />
 
       {/* Delete Confirmation Modal */}
