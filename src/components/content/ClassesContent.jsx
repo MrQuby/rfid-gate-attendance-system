@@ -58,11 +58,14 @@ const ClassesContent = () => {
         });
         setDepartmentMap(deptMap);
         
-        const crsMap = {};
+        const courseMap = {};
         courses.forEach(course => {
-          crsMap[course.id] = course;
+          courseMap[course.id] = {
+            name: course.courseName,
+            code: course.courseId
+          };
         });
-        setCourseMap(crsMap);
+        setCourseMap(courseMap);
       } catch (error) {
         console.error('Error fetching data:', error);
         toast.error('Failed to fetch required data');
@@ -160,7 +163,7 @@ const ClassesContent = () => {
     return (
       classItem.name.toLowerCase().includes(query) ||
       (departmentMap[classItem.departmentId] && departmentMap[classItem.departmentId].toLowerCase().includes(query)) ||
-      (courseMap[classItem.courseId] && courseMap[classItem.courseId].title.toLowerCase().includes(query)) ||
+      (courseMap[classItem.courseId] && courseMap[classItem.courseId].name.toLowerCase().includes(query)) ||
       (courseMap[classItem.courseId] && courseMap[classItem.courseId].code.toLowerCase().includes(query)) ||
       classItem.yearLevel.toLowerCase().includes(query)
     );
@@ -244,14 +247,14 @@ const ClassesContent = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">{classItem.name}</div>
                   <div className="text-xs text-gray-500 md:hidden">
-                    {courseMap[classItem.courseId]?.code} {courseMap[classItem.courseId]?.title}
+                    {courseMap[classItem.courseId]?.code}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
                   {courseMap[classItem.courseId] && (
                     <div>
                       <div className="font-medium">{courseMap[classItem.courseId].code}</div>
-                      <div className="text-xs">{courseMap[classItem.courseId].title}</div>
+                      <div className="text-xs">{courseMap[classItem.courseId].name}</div>
                     </div>
                   )}
                 </td>
