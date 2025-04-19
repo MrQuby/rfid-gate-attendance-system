@@ -7,6 +7,7 @@ const AdminHeader = ({ title }) => {
   const [user, loading] = useAuthState(auth);
   const [userData, setUserData] = React.useState(null);
   const [notificationCount, setNotificationCount] = useState(3);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -26,14 +27,52 @@ const AdminHeader = ({ title }) => {
     return () => unsubscribe();
   }, [user]);
 
+  // Update the current time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
+    
+    return () => clearInterval(timer);
+  }, []);
+
   // Use userData directly if available
   const displayName = userData ? `${userData.firstName} ${userData.lastName}` : '';
   const userRole = userData?.role || 'Admin';
   const avatarInitial = displayName.charAt(0) || (userData?.email?.charAt(0) || '');
 
+  // Format the current time
+  const formattedDate = currentTime.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+  
+  const formattedTime = currentTime.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
+
   return (
-    <header className="flex items-center justify-between p-4">
-      <h2 className="text-xl font-semibold">{title}</h2>
+    <header className="flex items-center justify-between p-4 border-b border-gray-200">
+      <div className="flex flex-col">
+        <div className="flex items-center">
+          <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
+          <div className="hidden md:flex items-center ml-4 text-sm text-gray-500">
+            <span>Dashboard</span>
+            <span className="mx-2">
+              <i className="fas fa-chevron-right text-xs"></i>
+            </span>
+            <span className="text-blue-600 font-medium">{title}</span>
+          </div>
+        </div>
+        <div className="text-sm text-gray-500 mt-1">
+          {formattedDate} | {formattedTime}
+        </div>
+      </div>
+      
       <div className="flex items-center space-x-4">
         <div className="relative">
           <button className="text-gray-600 hover:text-blue-600 focus:outline-none">
