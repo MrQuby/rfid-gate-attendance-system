@@ -60,11 +60,11 @@ const TeacherContent = () => {
         setClasses(updatedClasses);
         
         // Create class map for display
-        const clsMap = {};
+        const classMap = {};
         updatedClasses.forEach(cls => {
-          clsMap[cls.id] = cls;
+          classMap[cls.id] = { ...cls };
         });
-        setClassMap(clsMap);
+        setClassMap(classMap);
       }
     });
 
@@ -73,11 +73,14 @@ const TeacherContent = () => {
         setCourses(updatedCourses);
         
         // Create course map for display
-        const crsMap = {};
+        const courseMap = {};
         updatedCourses.forEach(course => {
-          crsMap[course.id] = course;
+          courseMap[course.id] = {
+            name: course.title || course.courseName,
+            code: course.code || course.courseId
+          };
         });
-        setCourseMap(crsMap);
+        setCourseMap(courseMap);
       }
     });
 
