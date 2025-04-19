@@ -117,7 +117,7 @@ const CoursesContent = () => {
     setDeleteModal({
       isOpen: true,
       courseId: course.id,
-      courseName: course.title
+      courseName: course.courseName
     });
   };
 
@@ -150,9 +150,9 @@ const CoursesContent = () => {
   const filteredCourses = courses.filter(course => {
     const query = searchQuery.toLowerCase();
     return (
-      (course.code && course.code.toLowerCase().includes(query)) ||
-      (course.title && course.title.toLowerCase().includes(query)) ||
-      (course.description && course.description.toLowerCase().includes(query))
+      (course.courseId.toLowerCase().includes(query)) ||
+      (course.courseName.toLowerCase().includes(query)) ||
+      (course.description.toLowerCase().includes(query))
     );
   });
 
@@ -226,16 +226,16 @@ const CoursesContent = () => {
                   {indexOfFirstItem + index + 1}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 hidden md:table-cell">
-                  {course.code}
+                  {course.courseId}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="ml-0">
                       <div className="text-sm font-medium text-gray-900">
-                        {course.title}
+                        {course.courseName}
                       </div>
                       <div className="text-xs text-gray-500 md:hidden">
-                        {course.code}
+                        {course.courseId}
                       </div>
                     </div>
                   </div>
