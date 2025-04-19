@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const DepartmentModal = ({ 
   isOpen, 
   onClose, 
   mode, 
-  currentDepartment, 
+  department, 
   onSubmit, 
-  onChange, 
-  loading 
+  onChange,
+  loading = false
 }) => {
   if (!isOpen) return null;
 
@@ -35,143 +37,125 @@ const DepartmentModal = ({
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="mt-4">
-          <div className="space-y-4">
-            {/* Department Name Field */}
-            <div className="grid grid-cols-1 gap-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Department Name
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i className="fas fa-building text-gray-400"></i>
-                </div>
-                <input
-                  type="text"
-                  name="name"
-                  value={currentDepartment.name}
-                  onChange={onChange}
-                  disabled={mode === 'view'}
-                  placeholder="Enter department name"
-                  className={`pl-10 w-full rounded-lg border ${
-                    mode === 'view' 
-                      ? 'bg-gray-50 text-gray-500' 
-                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
-                  } border-gray-300 shadow-sm p-2.5 transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
-                  required
-                />
+        {/* Modal Body */}
+        <form onSubmit={onSubmit} className="py-4 space-y-4">
+          {/* Department Name Field */}
+          <div className="grid grid-cols-1 gap-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Department Name
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i className="fas fa-building text-gray-400"></i>
               </div>
-            </div>
-
-            {/* Department Code Field */}
-            <div className="grid grid-cols-1 gap-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Department Code
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <i className="fas fa-code text-gray-400"></i>
-                </div>
-                <input
-                  type="text"
-                  name="code"
-                  value={currentDepartment.code}
-                  onChange={onChange}
-                  disabled={mode === 'view'}
-                  placeholder="Enter department code"
-                  className={`pl-10 w-full rounded-lg border ${
-                    mode === 'view' 
-                      ? 'bg-gray-50 text-gray-500' 
-                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
-                  } border-gray-300 shadow-sm p-2.5 transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Description Field */}
-            <div className="grid grid-cols-1 gap-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Description
-                <span className="text-red-500 ml-1">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute top-3 left-3 pointer-events-none">
-                  <i className="fas fa-align-left text-gray-400"></i>
-                </div>
-                <textarea
-                  name="description"
-                  value={currentDepartment.description}
-                  onChange={onChange}
-                  disabled={mode === 'view'}
-                  placeholder="Enter department description"
-                  rows="4"
-                  className={`pl-10 w-full rounded-lg border ${
-                    mode === 'view' 
-                      ? 'bg-gray-50 text-gray-500' 
-                      : 'bg-white hover:border-gray-400 focus:border-blue-500'
-                  } border-gray-300 shadow-sm p-2.5 transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
-                  required
-                />
-              </div>
+              <input
+                type="text"
+                name="name"
+                value={department.name || ''}
+                onChange={onChange}
+                disabled={mode === 'view' || loading}
+                placeholder="Enter department name"
+                className={`pl-10 w-full rounded-lg border ${
+                  mode === 'view' 
+                    ? 'bg-gray-50 text-gray-500' 
+                    : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                } border-gray-300 shadow-sm p-2.5 transition-colors
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                required
+              />
             </div>
           </div>
 
-          {/* Modal Footer */}
-          <div className="mt-6 pt-4 border-t border-gray-200">
-            {mode !== 'view' ? (
-              <div className="flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-6 py-2.5 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 
-                    hover:bg-gray-200 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 
-                    transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`px-6 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white 
-                    ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors
-                    flex items-center gap-2`}
-                >
-                  {loading ? (
-                    <>
-                      <i className="fas fa-spinner fa-spin"></i>
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <i className={`fas ${mode === 'add' ? 'fa-plus' : 'fa-save'}`}></i>
-                      {mode === 'add' ? 'Add Department' : 'Save Changes'}
-                    </>
-                  )}
-                </button>
+          {/* Department Code Field */}
+          <div className="grid grid-cols-1 gap-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Department Code
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i className="fas fa-code text-gray-400"></i>
               </div>
-            ) : (
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-6 py-2.5 bg-gray-800 text-white rounded-lg shadow-sm text-sm font-medium 
-                    hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 
-                    transition-colors flex items-center gap-2"
-                >
-                  <i className="fas fa-times"></i>
-                  Close
-                </button>
+              <input
+                type="text"
+                name="code"
+                value={department.code || ''}
+                onChange={onChange}
+                disabled={mode === 'view' || loading}
+                placeholder="Enter department code"
+                className={`pl-10 w-full rounded-lg border ${
+                  mode === 'view' 
+                    ? 'bg-gray-50 text-gray-500' 
+                    : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                } border-gray-300 shadow-sm p-2.5 transition-colors
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Description Field */}
+          <div className="grid grid-cols-1 gap-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Description
+            </label>
+            <div className="relative">
+              <div className="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
+                <i className="fas fa-align-left text-gray-400"></i>
               </div>
-            )}
+              <textarea
+                name="description"
+                value={department.description || ''}
+                onChange={onChange}
+                disabled={mode === 'view' || loading}
+                placeholder="Enter department description"
+                rows="3"
+                className={`pl-10 w-full rounded-lg border ${
+                  mode === 'view' 
+                    ? 'bg-gray-50 text-gray-500' 
+                    : 'bg-white hover:border-gray-400 focus:border-blue-500'
+                } border-gray-300 shadow-sm p-2.5 transition-colors
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+              />
+            </div>
           </div>
         </form>
+
+        {/* Modal Footer */}
+        <div className="pt-4 border-t border-gray-200">
+          <div className="flex justify-end space-x-3">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={loading}
+              className="px-6 py-2.5 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 
+                hover:bg-gray-200 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 
+                transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {mode === 'view' ? 'Close' : 'Cancel'}
+            </button>
+            {mode !== 'view' && (
+              <button
+                type="button"
+                onClick={onSubmit}
+                disabled={loading}
+                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg 
+                  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 
+                  transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
+              >
+                {loading ? (
+                  <>
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save'
+                )}
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -181,14 +165,10 @@ DepartmentModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   mode: PropTypes.oneOf(['add', 'edit', 'view']).isRequired,
-  currentDepartment: PropTypes.shape({
-    name: PropTypes.string,
-    code: PropTypes.string,
-    description: PropTypes.string,
-  }).isRequired,
+  department: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool
 };
 
 export default DepartmentModal;

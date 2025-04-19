@@ -23,7 +23,6 @@ const TeacherModal = ({
   const [classesByCourse, setClassesByCourse] = useState({});
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(teacher.profileImageURL || null);
-  const [uploadingImage, setUploadingImage] = useState(false);
   const fileInputRef = useRef(null);
   
   useEffect(() => {

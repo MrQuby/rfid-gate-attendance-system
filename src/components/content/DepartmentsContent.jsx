@@ -8,18 +8,15 @@ import SearchBar from '../common/SearchBar';
 
 const DepartmentsContent = () => {
   const [departments, setDepartments] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState('add');
-  const [currentDepartment, setCurrentDepartment] = useState({
-    name: '',
-    code: '',
-    description: ''
-  });
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [departmentToDelete, setDepartmentToDelete] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState('add');
+  const [currentDepartment, setCurrentDepartment] = useState({});
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [departmentToDelete, setDepartmentToDelete] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,11 +30,12 @@ const DepartmentsContent = () => {
     };
   }, []);
 
-  const openModal = (mode, department = null) => {
+  const handleOpenModal = (mode, dept = null) => {
     setModalMode(mode);
-    if (department) {
+    
+    if (dept) {
       setCurrentDepartment({
-        ...department
+        ...dept
       });
     } else {
       setCurrentDepartment({
@@ -46,21 +44,26 @@ const DepartmentsContent = () => {
         description: ''
       });
     }
+    
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleInputChange = (field, value) => {
-    setCurrentDepartment({
-      ...currentDepartment,
-      [field]: value
-    });
-  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentDepartment(prev => ({
+      ...prev,
+      [name]: value
+    }));
+};
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     setLoading(true);
     try {
       if (modalMode === 'add') {
@@ -70,7 +73,7 @@ const DepartmentsContent = () => {
         await updateDepartment(currentDepartment.id, currentDepartment);
         toast.success('Department updated successfully');
       }
-      closeModal();
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Error submitting department:', error);
       toast.error('Failed to save department');
@@ -114,8 +117,6 @@ const DepartmentsContent = () => {
   });
 
   // Pagination logic
-  const totalItems = filteredDepartments.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredDepartments.slice(indexOfFirstItem, indexOfLastItem);
@@ -146,7 +147,7 @@ const DepartmentsContent = () => {
             onChange={setSearchQuery}
           />
           <button
-            onClick={() => openModal('add')}
+            onClick={() => handleOpenModal('add')}
             className="px-4 py-2 bg-emerald-600 text-white rounded-3xl hover:bg-emerald-700 flex items-center gap-2"
           >
             <i className="fas fa-plus"></i>
@@ -194,14 +195,14 @@ const DepartmentsContent = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex items-center gap-2 justify-center">
                     <button
-                      onClick={() => openModal('view', department)}
+                      onClick={() => handleOpenModal('view', department)}
                       className="text-blue-600 hover:text-blue-900 bg-blue-100 hover:bg-blue-200 px-2.5 py-1 rounded-lg transition duration-200"
                       title="View"
                     >
                       <i className="fas fa-eye"></i>
                     </button>
                     <button
-                      onClick={() => openModal('edit', department)}
+                      onClick={() => handleOpenModal('edit', department)}
                       className="text-green-600 hover:text-green-900 bg-green-100 hover:bg-green-200 px-2.5 py-1 rounded-lg transition duration-200"
                       title="Edit"
                     >
@@ -238,19 +239,19 @@ const DepartmentsContent = () => {
       {filteredDepartments.length > 0 && (
         <Pagination
           currentPage={currentPage}
-          totalPages={totalPages}
+          totalPages={Math.ceil(filteredDepartments.length / itemsPerPage)}
           onPageChange={handlePageChange}
           itemsPerPage={itemsPerPage}
-          totalItems={totalItems}
+          totalItems={filteredDepartments.length}
         />
       )}
 
       {/* Department Modal */}
       <DepartmentModal
         isOpen={isModalOpen}
-        onClose={closeModal}
+        onClose={handleCloseModal}
         mode={modalMode}
-        currentDepartment={currentDepartment}
+        department={currentDepartment}
         onSubmit={handleSubmit}
         onChange={handleInputChange}
         loading={loading}
