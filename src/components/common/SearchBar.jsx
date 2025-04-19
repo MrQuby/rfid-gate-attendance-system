@@ -19,7 +19,7 @@ const SearchBar = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`w-full pl-10 pr-4 py-2 border-2 border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500 transition-colors ${inputClassName}`}
+        className={`w-full pl-10 pr-4 py-2 border-2 border-gray-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-red-400 hover:border-red-400 transition-colors ${inputClassName}`}
       />
     </div>
   );
