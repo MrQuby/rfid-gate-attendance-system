@@ -139,14 +139,16 @@ const TeacherContent = () => {
     setModalOpen(false);
   };
 
-  const handleInputChange = (field, value) => {
-    setCurrentTeacher({
-      ...currentTeacher,
-      [field]: value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentTeacher(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (modalMode === 'add') {
         await addTeacher(currentTeacher);

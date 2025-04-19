@@ -412,12 +412,12 @@ const TeacherModal = ({
                   Assigned Courses
                 </label>
                 {loading ? (
-                  <div className="flex items-center justify-center p-4 border rounded-lg">
+                  <div className="flex items-center justify-center p-4 border border-gray-300 rounded-lg">
                     <i className="fas fa-spinner spin text-blue-500 mr-2"></i>
                     <span>Loading courses...</span>
                   </div>
                 ) : (
-                  <div className="border rounded-lg p-3 max-h-40 overflow-y-auto">
+                  <div className="border border-gray-300 rounded-lg p-3 max-h-40 overflow-y-auto">
                     {courses.length > 0 ? (
                       <div className="grid grid-cols-2 gap-2">
                         {courses.map(course => {
@@ -456,12 +456,12 @@ const TeacherModal = ({
                   Assigned Classes
                 </label>
                 {loading ? (
-                  <div className="flex items-center justify-center p-4 border rounded-lg">
+                  <div className="flex items-center justify-center p-4 border border-gray-300 rounded-lg">
                     <i className="fas fa-spinner spin text-blue-500 mr-2"></i>
                     <span>Loading classes...</span>
                   </div>
                 ) : (
-                  <div className="border rounded-lg p-3 max-h-60 overflow-y-auto">
+                  <div className="border border-gray-300 rounded-lg p-3 max-h-60 overflow-y-auto">
                     {selectedCourses.length > 0 ? (
                       <div className="space-y-4">
                         {selectedCourses.map(courseId => {
@@ -470,7 +470,7 @@ const TeacherModal = ({
                           if (!course || courseClasses.length === 0) return null;
                           
                           return (
-                            <div key={courseId} className="border-b pb-2 last:border-b-0 last:pb-0">
+                            <div key={courseId} className="border-b border-gray-300 pb-2 last:border-b-0 last:pb-0">
                               <h4 className="font-medium text-gray-700 mb-2">{course.courseId}</h4>
                               <div className="grid grid-cols-2 gap-2">
                                 {courseClasses.map(classItem => {
