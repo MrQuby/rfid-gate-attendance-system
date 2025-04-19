@@ -78,11 +78,14 @@ const StudentContent = () => {
         setCourses(updatedCourses);
         
         // Create course map for display
-        const crsMap = {};
+        const courseMap = {};
         updatedCourses.forEach(course => {
-          crsMap[course.id] = course;
+          courseMap[course.id] = {
+            name: course.title || course.courseName,
+            code: course.code || course.courseId
+          };
         });
-        setCourseMap(crsMap);
+        setCourseMap(courseMap);
       }
     });
 
